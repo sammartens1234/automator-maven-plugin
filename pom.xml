@@ -1,8 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project>
  	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.jamosolutions</groupId>
   	<artifactId>jamoautomator-maven-plugin</artifactId>
-  	<version>0.0.1</version>
+  	<version>0.0.1-SNAPSHOT</version>
   	<packaging>maven-plugin</packaging>
   	<name>Jamo Automator Maven CI Plugin</name>
 	<description>A plugin that allows you to run JamoAutomator testcases using a Continous Integration system like Jenkins or Bamboo</description>
@@ -38,8 +38,7 @@
 	</distributionManagement> 
 	<scm>
     	<developerConnection>scm:git:https://github.com/sammartens1234/automator-maven-plugin.git</developerConnection>
-  	  <tag>0.0.1</tag>
-  </scm>
+  	</scm>
   	<dependencies>
     	<dependency>
       		<groupId>org.apache.maven</groupId>
