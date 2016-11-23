@@ -26,16 +26,19 @@
     </properties>
 	<distributionManagement>
 		  <repository>
-		     <id>deployment</id>
-		     <name>Internal Releases</name>
-		     <url>http://10.32.153.216:8081/nexus/content/repositories/releases/</url>
+		     <id>OSS</id>
+		     <name>OSS Releases</name>
+		     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		  </repository>
 		  <snapshotRepository>
-		     <id>deployment</id>
-		     <name>Internal Snapshots</name>
-		     <url>http://10.32.153.216:8081/nexus/content/repositories/snapshots/</url>
+		     <id>OSS</id>
+		     <name>OSS Snapshots</name>
+		     <url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		  </snapshotRepository>
 	</distributionManagement> 
+	<scm>
+    	<developerConnection>scm:git:https://github.com/sammartens1234/automator-maven-plugin.git</developerConnection>
+  	</scm>
   	<dependencies>
     	<dependency>
       		<groupId>org.apache.maven</groupId>
@@ -76,6 +79,11 @@
 	                <target>1.7</target>
 				</configuration>
 	        </plugin>
+	        <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-release-plugin</artifactId>
+		        <version>2.5.3</version>
+		    </plugin>
 	    </plugins>
 	</build>
 </project>
