@@ -10,10 +10,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import com.jamosolutions.JamoAutomator.domain.AppVersion;
 import com.jamosolutions.automator.domain.Credentials;
 
 @Mojo(name = "upload")
@@ -40,25 +37,24 @@ public class JamoUploadMojo extends AbstractMojo {
 			credentials.setAccount("SAM");
 			credentials.setUsername("sammartens@gmail.com");
 			credentials.setPassword("mas");
-			AppVersion appVersion = getLatestAppVersion(groupId + "." + artifactId, credentials);
-			getLog().info(appVersion.getDeveloperVersion());
+			//			AppVersion appVersion = getLatestAppVersion(groupId + "." + artifactId, credentials);
+			//			getLog().info(appVersion.getDeveloperVersion());
 		}
 		getLog().info(groupId);
 		getLog().info(System.getenv("M2_REPO"));
 		getLog().info("uploading file....");
 	}
 
-	private AppVersion getLatestAppVersion(String appPackage, Credentials credentials) throws MojoExecutionException {
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.setMessageConverters(getMessageConverters());
-		//TODO change hard coded url
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://10.32.153.224/rest/integration/latestAppVersion")
-				.queryParam("username", credentials.getUsername()).queryParam("password", credentials.getPassword())
-				.queryParam("account", credentials.getAccount()).queryParam("appPackage", appPackage);
-		AppVersion result = restTemplate.getForObject(builder.build().encode().toUri(), AppVersion.class);
-		return result;
-	}
-
+	//	private AppVersion getLatestAppVersion(String appPackage, Credentials credentials) throws MojoExecutionException {
+	//		RestTemplate restTemplate = new RestTemplate();
+	//		restTemplate.setMessageConverters(getMessageConverters());
+	//		//TODO change hard coded url
+	//		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://10.32.153.224/rest/integration/latestAppVersion")
+	//				.queryParam("username", credentials.getUsername()).queryParam("password", credentials.getPassword())
+	//				.queryParam("account", credentials.getAccount()).queryParam("appPackage", appPackage);
+	//		AppVersion result = restTemplate.getForObject(builder.build().encode().toUri(), AppVersion.class);
+	//		return result;
+	//	}
 	private static List<HttpMessageConverter<?>> getMessageConverters() {
 		List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
 		converters.add(new MappingJackson2HttpMessageConverter());

@@ -68,6 +68,13 @@
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.7.5</version>
 		</dependency>
+		<dependency>
+			  <groupId>com.jamosolutions</groupId>
+			  <artifactId>jamoautomation</artifactId>
+			  <version>1.1.21-SNAPSHOT</version>
+			  <classifier>domain</classifier>
+		</dependency>
+		
   	</dependencies>
   	<build>
 	  	<plugins>

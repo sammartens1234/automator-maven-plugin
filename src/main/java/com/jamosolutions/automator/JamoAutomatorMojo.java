@@ -34,13 +34,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
-import com.jamosolutions.JamoAutomator.domain.LoginStatus;
-import com.jamosolutions.JamoAutomator.domain.Report;
 import com.jamosolutions.automator.domain.Credentials;
 import com.jamosolutions.automator.domain.Device;
 import com.jamosolutions.automator.domain.ResponseStringWrapper;
 import com.jamosolutions.automator.domain.TestCase;
 import com.jamosolutions.automator.domain.TestSuite;
+import com.jamosolutions.jamoAutomator.domain.LoginStatus;
+import com.jamosolutions.jamoAutomator.domain.Report;
 
 @Mojo(name = "run")
 public class JamoAutomatorMojo extends AbstractMojo {
