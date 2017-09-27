@@ -212,9 +212,11 @@ public class JamoAutomatorMojo extends AbstractMojo {
 		}
 		builder.queryParam("testCase", testCase.getName()).queryParam("index", "" + index).queryParam("userKey", userKey);
 		if (StringUtils.isEmpty(device.getUdid())) {
+			getLog().info("running with device name " + device.getName());
 			builder.queryParam("device", device.getName());
 		} else {
-			builder.queryParam("device", device.getUdid());
+			getLog().info("running with uniqueDeviceConfiguration " + device.getUdid());
+			builder.queryParam("uniqueDeviceIdentification", device.getUdid());
 		}
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("X-AUTH-TOKEN", accessToken);
