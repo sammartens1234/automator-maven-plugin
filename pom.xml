@@ -71,7 +71,7 @@
 		<dependency>
 			  <groupId>com.jamosolutions</groupId>
 			  <artifactId>jamoautomation</artifactId>
-			  <version>1.1.21-SNAPSHOT</version>
+			  <version>1.1.26</version>
 			  <classifier>domain</classifier>
 		</dependency>
 		
