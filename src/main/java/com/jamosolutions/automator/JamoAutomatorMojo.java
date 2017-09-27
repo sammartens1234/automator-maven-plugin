@@ -28,6 +28,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.w3c.dom.Document;
@@ -74,6 +75,7 @@ public class JamoAutomatorMojo extends AbstractMojo {
 				JAXBContext jaxbContext = JAXBContext.newInstance(TestSuite.class);
 				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 				TestSuite testSuite = (TestSuite) jaxbUnmarshaller.unmarshal(testSuiteFile);
+				System.out.println(testSuite.getDevices().get(0).getUdid());
 				List<Execution> executions = new ArrayList<>();
 				//build the xml test suite document
 				//http://help.catchsoftware.com/display/ET/JUnit+Format
@@ -193,20 +195,33 @@ public class JamoAutomatorMojo extends AbstractMojo {
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.setMessageConverters(getMessageConverters());
 		UriComponentsBuilder builder;
+		url += "/rest/integration";
 		if (testCase.getSpecification() != null) {
-			builder = UriComponentsBuilder.fromHttpUrl(url + "/rest/integration/runSpec").queryParam("specification", testCase.getSpecification());
+			if (StringUtils.isEmpty(device.getUdid())) {
+				builder = UriComponentsBuilder.fromHttpUrl(url + "/runSpec");
+			} else {
+				builder = UriComponentsBuilder.fromHttpUrl(url + "/runSpec/udid");
+			}
+			builder.queryParam("specification", testCase.getSpecification());
 		} else {
-			builder = UriComponentsBuilder.fromHttpUrl(url + "/rest/integration/run");
+			if (StringUtils.isEmpty(device.getUdid())) {
+				builder = UriComponentsBuilder.fromHttpUrl(url + "/run");
+			} else {
+				builder = UriComponentsBuilder.fromHttpUrl(url + "/run/udid");
+			}
 		}
-		builder.queryParam("testCase", testCase.getName()).queryParam("index", "" + index).queryParam("device", device.getName())
-				.queryParam("userKey", userKey);
+		builder.queryParam("testCase", testCase.getName()).queryParam("index", "" + index).queryParam("userKey", userKey);
+		if (StringUtils.isEmpty(device.getUdid())) {
+			builder.queryParam("device", device.getName());
+		} else {
+			builder.queryParam("device", device.getUdid());
+		}
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("X-AUTH-TOKEN", accessToken);
 		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 		ResponseEntity<ResponseStringWrapper> responseEntity = restTemplate.exchange(builder.build().encode().toUri(), HttpMethod.GET, entity,
 				ResponseStringWrapper.class);
 		ResponseStringWrapper result = responseEntity.getBody();
-		//ResponseStringWrapper result = restTemplate.getForObject(builder.build().encode().toUri(), ResponseStringWrapper.class);
 		getLog().info("success:" + result.isSuccess());
 		getLog().info("execution id is:" + result.getMessage());
 		return result;
